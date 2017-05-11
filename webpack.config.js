@@ -5,9 +5,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     entry: './src/main.js',
     output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'build.js'
+        path: path.resolve(__dirname, 'public', 'dist'),
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
@@ -28,6 +27,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
+                options: { presets: ['es2015'] },
                 exclude: /node_modules/
             },
             {
@@ -39,10 +39,15 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    use: 'css?sourceMap!sass?sourceMap',
-                    fallback: 'style'
-                })
+                use: ExtractTextPlugin.extract([
+                    'css-loader?sourceMap',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins() { return [autoprefixer({ browsers: 'last 3 versions' })]; }
+                        }
+                    },
+                    'sass-loader?sourceMap'])
             }
         ]
     },
@@ -58,7 +63,7 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map',
+    devtool: 'source-map',
     // sassLoader: {
     //     includePaths: [ 'client/style' ]
     // },
