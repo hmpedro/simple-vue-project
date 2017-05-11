@@ -63,7 +63,7 @@ module.exports = {
     //     includePaths: [ 'client/style' ]
     // },
     plugins: [
-        new ExtractTextPlugin('dist/style.css')
+        new ExtractTextPlugin('style.css')
     ]
 }
 
