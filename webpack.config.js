@@ -3,10 +3,11 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: './src/main.js',
+    entry: ['./src/main.js', './src/sass/main.scss'],
     output: {
-        path: path.resolve(__dirname, 'public', 'dist'),
-        filename: '[name].bundle.js'
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/dist/',
+        filename: 'build.js'
     },
     module: {
         rules: [
@@ -34,20 +35,12 @@ module.exports = {
                 test: /\.(png|jpg|gif|svg)$/,
                 loader: 'file-loader',
                 options: {
-                    name: '[name].[ext]?[hash]'
+                    name: 'assets/[name].[ext]?[hash]'
                 }
             },
             {
-                test: /\.scss$/,
-                use: ExtractTextPlugin.extract([
-                    'css-loader?sourceMap',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins() { return [autoprefixer({ browsers: 'last 3 versions' })]; }
-                        }
-                    },
-                    'sass-loader?sourceMap'])
+                test: /\.(sass|scss)$/,
+                loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
             }
         ]
     },
@@ -68,12 +61,15 @@ module.exports = {
     //     includePaths: [ 'client/style' ]
     // },
     plugins: [
-        new ExtractTextPlugin('style.css')
+        new ExtractTextPlugin({ // define where to save the file
+            filename: '[name].bundle.css',
+            allChunks: true,
+        }),
     ]
 }
 
 if (process.env.NODE_ENV === 'production') {
-    module.exports.devtool = '#source-map'
+    module.exports.devtool = '#source-map';
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
