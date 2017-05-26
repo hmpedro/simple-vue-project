@@ -12,6 +12,7 @@
     "vue": "^2.2.1"
   },
   "devDependencies": {
+    "axios": "^0.16.1",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-latest": "^6.0.0",
@@ -19,11 +20,13 @@
     "css-loader": "^0.25.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.9.0",
+    "lodash": "^4.17.4",
     "node-sass": "^4.5.2",
     "postcss-loader": "^2.0.5",
     "sass-loader": "^5.0.1",
     "style-loader": "^0.17.0",
     "vue-loader": "^11.1.4",
+    "vue-router": "^2.5.3",
     "vue-template-compiler": "^2.2.1",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
