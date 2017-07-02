@@ -24,9 +24,9 @@ let routes = [
         component: require('./manager/manager.vue'),
         children: [
             {
-                path: '/login',
+                path: '',
                 components: {
-                    managerRouter: require('./front/views/about.vue'),
+                    managerRouter: require('./manager/views/login.vue'),
                 }
             }
         ]

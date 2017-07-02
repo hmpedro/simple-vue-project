@@ -1,15 +1,47 @@
 <template>
-    <div><h1>Login</h1></div>
+    <div>
+        <h1>Login</h1>
+        <form method="POST" action="/projects" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+            <div class="control">
+                <label for="name" class="label">Login:</label>
+                <input type="text" id="name" name="name" class="input" v-model="form.name">
+                <span class="help is-danger" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
+            </div>
+
+            <div class="control">
+                <label for="description" class="label">Password:</label>
+                <input type="password" id="description" name="description" class="input" v-model="form.description">
+                <span class="help is-danger" v-if="form.errors.has('description')" v-text="form.errors.get('description')"></span>
+            </div>
+            <div class="control">
+                <button class="button is-primary" :disabled="form.errors.any()">Create</button>
+            </div>
+
+        </form>
+    </div>
 </template>
 
 <script>
+    import Form from '../../core/Form'
+
     export default {
         name: 'login',
         components: {
         },
-        data () {
+        data() {
             return {
-                msg: 'Welcome to Your Vue.js App'
+                form: new Form({
+                    name: '',
+                    description: ''
+                })
+            }
+        },
+        methods: {
+            onSubmit() {
+//                this.form.post('/projects')
+//                    .then(data => console.log(data))
+//                    .catch(errors => console.log(errors));
+                alert('Trying to login.')
             }
         }
     }

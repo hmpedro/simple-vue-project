@@ -4,17 +4,19 @@
         <content>
             <router-view name="frontRouter"></router-view>
         </content>
-        <footer></footer>
+        <bottom></bottom>
     </main>
 </template>
 
 <script>
     import top from './containers/top.vue'
+    import bottom from './containers/bottom.vue'
 
     export default {
         name: 'front',
         components: {
-            top
+            top,
+            bottom
         },
         data () {
             return {

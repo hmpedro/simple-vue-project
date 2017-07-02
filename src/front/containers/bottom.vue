@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: 'footer',
+        name: 'bottom',
         mounted() {
             console.log('Component mounted.')
         }
