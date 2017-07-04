@@ -14,3 +14,7 @@ npm run dev
 # build for production with minification
 npm run build
 ```
+
+## TO-DO
+- Implement OAuth;
+- Implement a functional CRUD test page;
