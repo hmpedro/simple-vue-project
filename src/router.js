@@ -12,10 +12,9 @@ import About from './front/views/about.vue'
 * MANAGER
 */
 import Manager from './manager/manager.vue'
-import Login from './manager/views/login.vue'
+import Login from './manager/views/login/login.vue'
 import Panel from './manager/views/panel.vue'
 import UsersList from './manager/views/users/users.list.vue'
-
 
 let routes = [
     {
@@ -57,35 +56,20 @@ let routes = [
                 components: {
                     managerRouter: UsersList,
                 }
-            },
-            {
-                path: '*',
-                redirect: to => {
-                    // const { hash, params, query } = to
-                    // if (query.to === 'foo') {
-                    //     return { path: '/foo', query: null }
-                    // }
-                    // if (hash === '#baz') {
-                    //     return { name: 'baz', hash: '' }
-                    // }
-                    // if (params.id) {
-                    //     return '/with-params/:id'
-                    // } else {
-                    //     return '/bar'
-                    // }
-                    console.log('passou por aqui')
-                    if(!Auth.user.authenticated){
-                        return '/login'
-                    }
-                }
             }
         ]
     }
 ];
 
-export default new VueRouter({
-
+const router = new VueRouter({
     routes,
     linkActiveClass: 'is-active'
+});
 
-})
+router.beforeEach((to, from, next) => {
+
+});
+
+
+
+export default router;
