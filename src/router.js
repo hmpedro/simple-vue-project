@@ -28,7 +28,7 @@ let routes = [
                 }
             },
             {
-                path: '/quem-somos',
+                path: 'quem-somos',
                 components: {
                     frontRouter: About,
                 }
@@ -46,13 +46,13 @@ let routes = [
                 }
             },
             {
-                path: '/login',
+                path: 'login',
                 components: {
                     managerRouter: Login,
                 }
             },
             {
-                path: '/users',
+                path: 'users',
                 components: {
                     managerRouter: UsersList,
                 }
@@ -61,13 +61,13 @@ let routes = [
     }
 ];
 
-const router = new VueRouter({
+let router = new VueRouter({
     routes,
     linkActiveClass: 'is-active'
 });
 
 router.beforeEach((to, from, next) => {
-
+    next();
 });
 
 
