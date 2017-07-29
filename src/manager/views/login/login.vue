@@ -22,6 +22,7 @@
 </template>
 
 <script>
+    import requestService from '../../core/RequestService'
 
     export default {
         name: 'login',
