@@ -16,6 +16,11 @@ import Login from './manager/views/login/login.vue'
 import Panel from './manager/views/panel.vue'
 import UsersList from './manager/views/users/users.list.vue'
 
+/*
+* ERRORS PAGES
+ */
+import PageNotFound from './components/pageNotFound.vue'
+
 let routes = [
     {
         path: '/',
@@ -57,8 +62,12 @@ let routes = [
                     managerRouter: UsersList,
                 }
             }
-        ]
-    }
+        ],
+        beforeEnter: (to, from, next) => {
+            if(Auth.checkAuth()) next();
+        }
+    },
+    { path: "*", component: PageNotFound }
 ];
 
 let router = new VueRouter({
@@ -67,6 +76,8 @@ let router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    console.log(to);
+    // to.path.split('/').find()
     next();
 });
 

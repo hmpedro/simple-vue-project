@@ -4,74 +4,30 @@ class RequestService {
 
 	}
 
-	create(requestParameters) {
-		let url = requestParameters.url;
-		let data = requestParameters.data;
-		let onSuccess = requestParameters.onSuccess;
-		let onFail = requestParameters.onFail;
-
-		axios.post(url, data)
-		  .then(function (response) {
-		    onSuccess(response.data);
-		  })
-		  .catch(function (error) {
-		    onFail(error.response.data);
-		  });
+	create(url, data) {
+		return axios.post(url, data);
 	}
 
-	retrieve(requestParameters) {
+	retrieve(url, id, filters) {
 		let config = {
-			params: requestParameters.filter
+			params: filters || {},
 		};
-
-		let id = requestParameters.id;
-		let url = requestParameters.url;
-		let onSuccess = requestParameters.onSuccess;
-		let onFail = requestParameters.onFail;
 
 		if(id) {
 			url = url+'/'+id;
 		}
 
-		axios.get(url, config)
-		  .then(function (response) {
-		    onSuccess(response.data);
-		  })
-		  .catch(function (error) {
-		    onFail(error.response.data);
-		  });
-
+		return axios.get(url, config);
 	}
 
-	update(requestParameters) {
-		let id = requestParameters.id;
-		let url = requestParameters.url;
-		let data = requestParameters.data;
-		let onSuccess = requestParameters.onSuccess;
-		let onFail = requestParameters.onFail;
+	update(url, id, data) {
 
-		axios.put(url+'/'+id, data)
-		  .then(function (response) {
-		    onSuccess(response.data);
-		  })
-		  .catch(function (error) {
-		    onFail(error.response.data);
-		  });
+		return axios.put(url+'/'+id, data);
 	}
 
-	delete(requestParameters) {
-		let id = requestParameters.id;
-		let url = requestParameters.url;
-		let onSuccess = requestParameters.onSuccess;
-		let onFail = requestParameters.onFail;
+	delete(url, id) {
 
-		axios.get(url+'/'+id, config)
-		  .then(function (response) {
-		    onSuccess(response.data);
-		  })
-		  .catch(function (error) {
-		    onFail(error.response.data);
-		  });
+		return axios.get(url+'/'+id, config);
 	}
 }
 

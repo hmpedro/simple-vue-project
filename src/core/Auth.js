@@ -14,20 +14,18 @@ export default {
 
     // Send a request to the login URL and save the returned JWT
     login(context, creds, redirect) {
-        context.$http.post(LOGIN_URL, creds, (data) => {
-            localStorage.setItem('id_token', data.id_token)
-            localStorage.setItem('access_token', data.access_token)
+        return axios.post(LOGIN_URL, creds)
+            .then((data) => {
+                localStorage.setItem('id_token', data.id_token)
+                localStorage.setItem('access_token', data.access_token)
 
-            this.user.authenticated = true
+                this.user.authenticated = true
 
-            // Redirect to a specified route
-            if(redirect) {
-                Router.go(redirect)
-            }
-
-        }).error((err) => {
-            context.error = err
-        })
+                // Redirect to a specified route
+                if(redirect) {
+                    Router.go(redirect)
+                }
+            });
     },
 
     signup(context, creds, redirect) {
