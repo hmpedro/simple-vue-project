@@ -15,6 +15,7 @@ import Manager from './manager/manager.vue'
 import Login from './manager/views/login/login.vue'
 import Panel from './manager/views/panel.vue'
 import UsersList from './manager/views/users/users.list.vue'
+import UsersEdit from './manager/views/users/users.edit.vue'
 
 /*
 * ERRORS PAGES
@@ -58,16 +59,23 @@ let routes = [
             },
             {
                 path: 'users',
-                components: {
-                    managerRouter: UsersList,
-                }
+                children: [
+                    {
+                        path: 'list',
+                        component: UsersList
+                    },
+                    {
+                        path: 'edit/:id',
+                        components: UsersEdit,
+                    }
+                ]
             }
-        ],
-        beforeEnter: (to, from, next) => {
-            if(Auth.checkAuth()) next();
-        }
+        ]
     },
-    { path: "*", component: PageNotFound }
+    {
+        path: "*",
+        component: PageNotFound
+    }
 ];
 
 let router = new VueRouter({
@@ -77,7 +85,17 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     console.log(to);
-    // to.path.split('/').find()
+
+    let pathSplitted = to.path.split('/');
+    console.log(pathSplitted);
+    if(pathSplitted[1] === 'admin' && pathSplitted[2] !== 'login' && !Auth.checkAuth()) {
+        //router.go('/admin/login')
+
+        router.push('/admin/login');
+        next(false);
+        console.log('caiu')
+    }
+
     next();
 });
 
