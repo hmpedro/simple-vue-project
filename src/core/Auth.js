@@ -1,9 +1,18 @@
-import Router from '../router'
+import router from '../router'
 
 // URL and endpoint constants
-const API_URL = 'http://localhost:3001/'
-const LOGIN_URL = API_URL + 'sessions/create/'
-const SIGNUP_URL = API_URL + 'users/'
+const API_URL = 'http://localhost:3000/v1/'
+const LOGIN_URL = API_URL + 'auth'
+// const SIGNUP_URL = API_URL + 'users/'
+
+// Set config defaults when creating the instance
+var authAxiosInstance = axios.create({
+    baseURL: LOGIN_URL
+});
+
+// Alter defaults after instance has been created
+// authAxiosInstance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+authAxiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 export default {
 
@@ -13,30 +22,34 @@ export default {
     },
 
     // Send a request to the login URL and save the returned JWT
-    login(context, creds, redirect) {
-        return axios.post(LOGIN_URL, creds)
-            .then((data) => {
-                localStorage.setItem('id_token', data.id_token)
-                localStorage.setItem('access_token', data.access_token)
+    login(creds, redirect) {
+        return authAxiosInstance.post(LOGIN_URL, creds, {'Content-Type':'application/x-www-form-urlencoded'})
+            .then((response) => {
+                let data = response.data;
+                // localStorage.setItem('id_token', data.id_token)
+                localStorage.setItem('access_token', data.token);
 
-                this.user.authenticated = true
+                this.user.authenticated = true;
 
                 // Redirect to a specified route
                 if(redirect) {
-                    Router.go(redirect)
+                    router.push(redirect);
                 }
+            })
+            .catch((response) => {
+                console.log(response);
             });
     },
 
     signup(context, creds, redirect) {
         context.$http.post(SIGNUP_URL, creds, (data) => {
-            localStorage.setItem('id_token', data.id_token)
-            localStorage.setItem('access_token', data.access_token)
+            // localStorage.setItem('id_token', data.id_token)
+            localStorage.setItem('access_token', data.access_token);
 
-            this.user.authenticated = true
+            this.user.authenticated = true;
 
             if(redirect) {
-                Router.go(redirect)
+                router.push(redirect);
             }
 
         }).error((err) => {
@@ -45,15 +58,16 @@ export default {
     },
 
     // To log out, we just need to remove the token
-    logout() {
-        localStorage.removeItem('id_token')
+    logout(redirect) {
+        // localStorage.removeItem('id_token')
         localStorage.removeItem('access_token')
         this.user.authenticated = false
+        router.push(redirect);
     },
 
     checkAuth() {
-        var jwt = localStorage.getItem('id_token')
-        if(jwt) {
+        let token = localStorage.getItem('access_token')
+        if(token) {
             this.user.authenticated = true
         }
         else {

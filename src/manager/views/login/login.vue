@@ -3,15 +3,15 @@
         <h1>Login</h1>
         <form method="POST" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
             <div class="control">
-                <label for="name" class="label">Login:</label>
-                <input type="text" id="name" name="name" class="input" v-model="form.login">
-                <span class="help is-danger" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
+                <label for="username" class="label">Username:</label>
+                <input type="text" id="username" name="username" class="input" v-model="form.username">
+                <span class="help is-danger" v-if="form.errors.has('username')" v-text="form.errors.get('username')"></span>
             </div>
 
             <div class="control">
-                <label for="description" class="label">Password:</label>
-                <input type="password" id="description" name="description" class="input" v-model="form.password">
-                <span class="help is-danger" v-if="form.errors.has('description')" v-text="form.errors.get('description')"></span>
+                <label for="password" class="label">Password:</label>
+                <input type="password" id="password" name="password" class="input" v-model="form.password">
+                <span class="help is-danger" v-if="form.errors.has('password')" v-text="form.errors.get('password')"></span>
             </div>
             <div class="control">
                 <button class="button is-primary" :disabled="form.errors.any()">Create</button>
@@ -31,15 +31,17 @@
         data() {
             return {
                 form: new Form({
-                    login: '',
+                    username: '',
                     password: ''
                 })
             }
         },
         methods: {
             onSubmit() {
+                let creds = this.form;
+
                 authService
-                    .login('/login', data, '/admin')
+                    .login(creds, '/admin')
                     .catch(errors => {
                         this.form.showErrors(errors);
                     });
