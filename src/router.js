@@ -88,11 +88,9 @@ router.beforeEach((to, from, next) => {
 
     let pathSplitted = to.path.split('/');
     console.log(pathSplitted);
-    if(pathSplitted[1] === 'admin' && pathSplitted[2] !== 'login' && !Auth.checkAuth()) {
-        //router.go('/admin/login')
-
-        router.push('/admin/login');
+    if(pathSplitted[1] === 'admin' && pathSplitted[2] !== 'login' && !Auth.user.authenticated) {
         next(false);
+        router.push('/admin/login');
         console.log('caiu')
     }
 

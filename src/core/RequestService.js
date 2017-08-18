@@ -7,7 +7,7 @@ class RequestService {
 	}
 
 	create(url, data) {
-		return axios.post(url, data, this.config);
+		return axios.post(API_URL+url, data, this.config);
 	}
 
 	retrieve(url, id, filters) {
@@ -19,16 +19,16 @@ class RequestService {
 			url = url+'/'+id;
 		}
 
-		return axios.get(url, methodConfig);
+		return axios.get(API_URL+url, methodConfig);
 	}
 
 	update(url, id, data) {
 
-		return axios.put(url+'/'+id, data), this.config;
+		return axios.put(API_URL+url+'/'+id, data), this.config;
 	}
 
 	delete(url, id) {
-		return axios.get(url+'/'+id, this.config);
+		return axios.get(API_URL+url+'/'+id, this.config);
 	}
 }
 

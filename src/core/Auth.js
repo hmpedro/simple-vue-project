@@ -1,7 +1,6 @@
 import router from '../router'
 
 // URL and endpoint constants
-const API_URL = 'http://localhost:3000/v1/'
 const LOGIN_URL = API_URL + 'auth'
 // const SIGNUP_URL = API_URL + 'users/'
 
@@ -14,7 +13,7 @@ var authAxiosInstance = axios.create({
 // authAxiosInstance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 authAxiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-export default {
+module.exports =  {
 
     // User object will let us check authentication status
     user: {

@@ -41,7 +41,7 @@
                 let creds = this.form;
 
                 authService
-                    .login(creds, '/admin')
+                    .login(creds, '/admin/users/list')
                     .catch(errors => {
                         this.form.showErrors(errors);
                     });
